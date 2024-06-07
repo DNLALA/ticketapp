@@ -115,7 +115,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                   ),
                                   color: ticket['transferEmail'] == null
                                       ? const Color(0xFF0163D5)
-                                      : Color.fromARGB(255, 157, 162, 166),
+                                      : const Color.fromARGB(
+                                          255, 157, 162, 166),
                                 ),
                                 child: Center(
                                   child: Text(
@@ -227,11 +228,11 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                       height: 20,
                                     ),
                                     Container(
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
                                             Colors.transparent,
-                                            Colors.black.withOpacity(0.7),
+                                            Colors.black,
                                           ],
                                           begin: Alignment.topCenter,
                                           end: Alignment.bottomCenter,
@@ -247,9 +248,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          const SizedBox(
-                                              height:
-                                                  5), // Changed from width to height for vertical spacing
+                                          const SizedBox(height: 5),
                                           Text(
                                             widget.showData,
                                             style: const TextStyle(
@@ -259,9 +258,6 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(
-                                        height:
-                                            20), // Changed from width to height for vertical spacing
                                   ],
                                 ),
                               ),
