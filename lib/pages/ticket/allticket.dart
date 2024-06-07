@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:ticketapp/pages/ticket/fulltransfar.dart';
 import 'package:ticketapp/pages/ticket/tranfaruser.dart';
 import 'package:ticketapp/pages/ticket/transfarseat.dart';
 import 'package:ticketapp/pages/ticket/transfarto.dart';
@@ -21,7 +22,7 @@ class TicketListForShow extends StatefulWidget {
 
 class _TicketListForShowState extends State<TicketListForShow> {
   late Future<List<Map<String, dynamic>>> _ticketListFuture;
-  List<Ticket> _selectedTickets = [];
+  final List<Ticket> _selectedTickets = [];
   int userId = 1;
   bool haveUser = false;
 
@@ -97,7 +98,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
                   child: Row(
                     children: snapshot.data!.map((ticket) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Container(
                           width: screenWidth * 0.9,
                           height: 576,
@@ -114,7 +115,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                   ),
                                   color: ticket['transferEmail'] == null
                                       ? const Color(0xFF0163D5)
-                                      : const Color(0xFF4F5B65),
+                                      : Color.fromARGB(255, 157, 162, 166),
                                 ),
                                 child: Center(
                                   child: Text(
@@ -153,7 +154,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                           ticket['selection'],
                                           style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 15,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
@@ -173,7 +175,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                           ticket['row'].toString(),
                                           style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 15,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
@@ -193,7 +196,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                           ticket['seat'].toString(),
                                           style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 15,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
@@ -223,8 +227,16 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                       height: 20,
                                     ),
                                     Container(
-                                      color: const Color.fromARGB(
-                                          67, 168, 168, 168),
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.black.withOpacity(0.7),
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        ),
+                                      ),
                                       width: screenWidth,
                                       child: Column(
                                         children: [
@@ -235,7 +247,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          const SizedBox(width: 5),
+                                          const SizedBox(
+                                              height:
+                                                  5), // Changed from width to height for vertical spacing
                                           Text(
                                             widget.showData,
                                             style: const TextStyle(
@@ -245,7 +259,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(width: 20),
+                                    const SizedBox(
+                                        height:
+                                            20), // Changed from width to height for vertical spacing
                                   ],
                                 ),
                               ),

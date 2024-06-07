@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:ticketapp/componets/TextFields/BaseText.dart';
@@ -199,7 +198,7 @@ class _TicketListState extends State<TicketList> {
             enableDrag: true,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              return Container(
+              return SizedBox(
                 height: screenHeight * 0.8,
                 width: screenWidth,
                 child: Column(

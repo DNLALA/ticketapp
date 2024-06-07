@@ -94,10 +94,16 @@ class _TransfarUserState extends State<TransfarUser> {
     } else {}
   }
 
+  String generateSeatInfo(List<int> selectedSeats) {
+    return selectedSeats.map((seat) => 'Seat $seat').join(' & ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final seatInfo =
+        "Sec ${widget.section}, Row Q, ${generateSeatInfo(widget.selectedSeats)}";
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -133,11 +139,11 @@ class _TransfarUserState extends State<TransfarUser> {
                   textAlign: TextAlign.left,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 16.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  "Sec 171, Row Q, Seat 171",
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  seatInfo,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -201,7 +207,7 @@ class _TransfarUserState extends State<TransfarUser> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Text('Note'),
+                    const Text('Note'),
                     TextField(
                       controller: _noteController,
                       decoration: InputDecoration(

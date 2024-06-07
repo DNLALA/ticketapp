@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class TransfarTo extends StatefulWidget {
@@ -68,7 +70,7 @@ class _TransfarToState extends State<TransfarTo> {
                       Text(
                         'Select From Contacts',
                         style: TextStyle(
-                          color: const Color(0xff0163D5),
+                          color: Color(0xff0163D5),
                         ),
                       ),
                       SizedBox(
@@ -76,7 +78,7 @@ class _TransfarToState extends State<TransfarTo> {
                       ),
                       Icon(
                         Icons.contact_page_outlined,
-                        color: const Color(0xff0163D5),
+                        color: Color(0xff0163D5),
                       )
                     ]),
               ),
@@ -105,7 +107,7 @@ class _TransfarToState extends State<TransfarTo> {
                         Text(
                           'Manually Enter A Recipient',
                           style: TextStyle(
-                            color: const Color(0xff0163D5),
+                            color: Color(0xff0163D5),
                           ),
                         ),
                         SizedBox(

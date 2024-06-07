@@ -20,7 +20,7 @@ class TicketSelection extends StatefulWidget {
 
 class _TicketSelectionState extends State<TicketSelection> {
   late Future<List<Ticket>> _ticketsFuture;
-  List<Ticket> _selectedTickets = [];
+  final List<Ticket> _selectedTickets = [];
 
   @override
   void initState() {
@@ -182,7 +182,7 @@ class _TicketSelectionState extends State<TicketSelection> {
                                             : Icons.circle_outlined,
                                         color: isSelected
                                             ? Colors.blue
-                                            : Color(0xFF908E8E),
+                                            : const Color(0xFF908E8E),
                                       ),
                                     ),
                                   ),
@@ -196,7 +196,7 @@ class _TicketSelectionState extends State<TicketSelection> {
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 240,
               ),
               Container(

@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:ticketapp/model/datamodel.dart';
 import 'package:ticketapp/services/database_helper.dart';
 
 class TransfarSymbol extends StatefulWidget {
