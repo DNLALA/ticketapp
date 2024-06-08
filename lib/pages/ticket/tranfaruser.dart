@@ -103,7 +103,7 @@ class _TransfarUserState extends State<TransfarUser> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final seatInfo =
-        "Sec ${widget.section}, Row Q, ${generateSeatInfo(widget.selectedSeats)}";
+        "Sec ${widget.section}, Row ${widget.selectedSeats[0].toString()}, Seat ${widget.selectedSeats[1].toString()}, ${generateSeatInfo(widget.selectedSeats)}";
 
     return StatefulBuilder(
       builder: (context, setState) {
