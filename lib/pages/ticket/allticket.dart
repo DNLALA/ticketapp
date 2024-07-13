@@ -60,8 +60,10 @@ class _TicketListForShowState extends State<TicketListForShow> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    DateFormat format = DateFormat('yyyy-MM-dd HH:mm a');
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm');
+    // DateFormat format = DateFormat('yyyy-MM-dd HH:mm a');
     DateTime endTime = format.parse(widget.date);
+    // DateTime endTime = format.parse('2022-07-9 2:39 PM');
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

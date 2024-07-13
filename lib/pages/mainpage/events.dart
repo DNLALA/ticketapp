@@ -101,6 +101,7 @@ class _MyEventsState extends State<MyEvents> {
                           '${show.weekday}, ${getMonthName(show.month)} ${show.day}, ${show.time} ${show.location}';
                       String date =
                           '2024-${show.month}-${show.day} ${show.time}';
+                      print(date);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
