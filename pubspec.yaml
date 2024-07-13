@@ -18,6 +18,7 @@ dependencies:
   
 
   path: any
+  timer_builder: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -31,8 +31,6 @@ class _MyEventsState extends State<MyEvents> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF0163D5),
@@ -101,12 +99,15 @@ class _MyEventsState extends State<MyEvents> {
                     onTap: () {
                       String showData =
                           '${show.weekday}, ${getMonthName(show.month)} ${show.day}, ${show.time} ${show.location}';
+                      String date =
+                          '2024-${show.month}-${show.day} ${show.time}';
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => TicketListForShow(
                             showId: show.id!,
                             showData: showData,
+                            date: date,
                           ),
                         ),
                       );
@@ -122,7 +123,7 @@ class _MyEventsState extends State<MyEvents> {
                         ),
                       ),
                       child: Container(
-                        color: const Color.fromARGB(222, 124, 123, 123),
+                        color: Color.fromARGB(143, 0, 0, 0),
                         height: 167,
                         width: 393,
                         child: Column(
@@ -206,7 +207,7 @@ class _MyEventsState extends State<MyEvents> {
                                       Text(
                                         show.day.toString(),
                                         style: const TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 30,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),

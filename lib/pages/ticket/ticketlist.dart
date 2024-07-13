@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ticketapp/componets/TextFields/BaseText.dart';
 import 'package:ticketapp/componets/cards/actioncard.dart';
 import 'package:ticketapp/model/datamodel.dart';
+import 'package:ticketapp/pages/ticket/addticketmodal.dart';
 import 'package:ticketapp/services/database_helper.dart';
 
 class TicketList extends StatefulWidget {
@@ -18,7 +19,10 @@ class _TicketListState extends State<TicketList> {
   late TextEditingController _sectionController;
   late TextEditingController _rowController;
   late TextEditingController _seatController;
+  late TextEditingController _nameController;
   late List<Show> _shows;
+  String? _selectedStageType;
+  String? _selectedViewType;
   Show? _selectedShow;
 
   @override
@@ -27,6 +31,7 @@ class _TicketListState extends State<TicketList> {
     _sectionController = TextEditingController();
     _rowController = TextEditingController();
     _seatController = TextEditingController();
+    _nameController = TextEditingController();
     _selectedShow = null;
     _loadArtists();
   }
@@ -41,6 +46,7 @@ class _TicketListState extends State<TicketList> {
     _sectionController.dispose();
     _rowController.dispose();
     _seatController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -154,7 +160,9 @@ class _TicketListState extends State<TicketList> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ActionContainer(
-                                  onTap: () {},
+                                  onTap: () {
+                                    _deleteArtist(show.id);
+                                  },
                                   image: 'assets/images/bin.png',
                                   color: Colors.red,
                                 ),
@@ -198,92 +206,7 @@ class _TicketListState extends State<TicketList> {
             enableDrag: true,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              return SizedBox(
-                height: screenHeight * 0.8,
-                width: screenWidth,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Center(
-                      child: Text(
-                        "Add new ticket",
-                        style: TextStyle(fontSize: 17),
-                      ),
-                    ),
-                    const Divider(
-                      height: 20,
-                      thickness: 1,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DropdownButtonFormField<Show>(
-                        value: _selectedShow,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectedShow = newValue;
-                          });
-                        },
-                        items: _shows.map((show) {
-                          return DropdownMenuItem<Show>(
-                            value: show,
-                            child: Text(show.name),
-                          );
-                        }).toList(),
-                        decoration: const InputDecoration(
-                          hintText: 'Select show',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomTextField(
-                        controller: _sectionController,
-                        hintText: 'Section',
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomTextField(
-                        controller: _rowController,
-                        hintText: 'Row',
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomTextField(
-                        controller: _seatController,
-                        hintText: 'Seat',
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              _addTicket();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF127CF7),
-                            ),
-                            child: const Text(
-                              "Add Ticket",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
+              return const AddTicketModel();
             },
           );
         },
@@ -298,25 +221,32 @@ class _TicketListState extends State<TicketList> {
     if (rowName.isNotEmpty) {
       final Ticket ticket = Ticket(
         showId: _selectedShow!.id,
+        stage: _selectedStageType ?? '',
+        view: _selectedViewType ?? '',
         selection: _sectionController.text,
         row: _rowController.text,
         seat: _seatController.text,
+        name: _nameController.text,
       );
       await DatabaseHelper.addTicket(ticket); // Corrected method call
       setState(() {
+        _sectionController.clear();
         _rowController.clear();
         _seatController.clear();
-        _sectionController.clear();
+        _nameController.clear();
+        _selectedStageType = null;
+        _selectedViewType = null;
+        _selectedShow = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Show added successfully')),
+        const SnackBar(content: Text('Ticket added successfully')),
       );
       Navigator.pop(context); // Corrected method name
     } else {
-      // Show error message if show name or image is not selected
+      // Show error message if row name is not entered
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please enter show name and select an image'),
+          content: Text('Please fill in all fields'),
           backgroundColor: Colors.red,
         ),
       );
@@ -329,9 +259,9 @@ class _TicketListState extends State<TicketList> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Show'), // Update the dialog title
+          title: const Text('Delete Ticket'), // Update the dialog title
           content: const Text(
-              'Are you sure you want to delete this show?'), // Update the dialog content
+              'Are you sure you want to delete this Ticket?'), // Update the dialog content
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -341,7 +271,7 @@ class _TicketListState extends State<TicketList> {
             ),
             TextButton(
               onPressed: () async {
-                await DatabaseHelper.deleteShow(id); // Corrected method call
+                await DatabaseHelper.deleteTicket(id); // Corrected method call
                 setState(() {});
                 Navigator.of(context).pop(); // Close the dialog
               },

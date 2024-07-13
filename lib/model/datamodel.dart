@@ -100,25 +100,34 @@ class Show {
 class Ticket {
   final int? id;
   final int? showId;
+  final String stage;
+  final String view;
   final String selection;
   final String row;
   final String seat;
+  final String name;
 
   Ticket({
     this.id,
     required this.showId,
+    required this.stage,
+    required this.view,
     required this.selection,
     required this.row,
     required this.seat,
+    required this.name,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'showId': showId,
+      'stage': stage,
+      'view': view,
       'selection': selection,
       'row': row,
       'seat': seat,
+      'name': name,
     };
   }
 
@@ -129,9 +138,12 @@ class Ticket {
     return Ticket(
       id: json['id'],
       showId: json['showId'],
+      stage: json['stage'] ?? '',
+      view: json['view'] ?? '',
       selection: json['selection'] ?? '',
-      row: json['row'] ?? 0,
-      seat: json['seat'] ?? 0,
+      row: json['row'] ?? '',
+      seat: json['seat'] ?? '',
+      name: json['name'] ?? '',
     );
   }
 }

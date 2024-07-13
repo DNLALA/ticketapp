@@ -14,7 +14,7 @@ class DatabaseHelper {
       await db.execute(
           "CREATE TABLE Show(id INTEGER PRIMARY KEY, artistId INTEGER, month TEXT NOT NULL, day INTEGER NOT NULL, time TEXT NOT NULL, weekday TEXT NOT NULL,name TEXT NOT NULL, location TEXT NOT NULL, fee TEXT NOT NULL, orderId TEXT, mapUrl TEXT, ticketType TEXT, FOREIGN KEY(artistId) REFERENCES Artist(id));");
       await db.execute(
-          "CREATE TABLE Ticket(id INTEGER PRIMARY KEY, showId INTEGER, selection TEXT NOT NULL, row TEXT NOT NULL, seat TEXT NOT NULL, FOREIGN KEY(showId) REFERENCES Show(id));");
+          "CREATE TABLE Ticket(id INTEGER PRIMARY KEY, showId INTEGER, selection TEXT NOT NULL, row TEXT NOT NULL, seat TEXT NOT NULL, stage TEXT NOT NULL, view TEXT NOT NULL, name TEXT NOT NULL,   FOREIGN KEY(showId) REFERENCES Show(id));");
       await db.execute(
         "CREATE TABLE TransferInfo (id INTEGER PRIMARY KEY,firstName TEXT NOT NULL,lastName TEXT NOT NULL,emailPhone TEXT NOT NULL,note TEXT NOT NULL);",
       );
