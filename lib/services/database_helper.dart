@@ -152,7 +152,8 @@ class DatabaseHelper {
     final db = await _getDB();
 
     final List<Map<String, dynamic>> maps = await db.rawQuery('''
-    SELECT Ticket.*, Show.*, Artist.name AS artistName, Artist.imageBytes AS artistImage
+    SELECT Ticket.id AS ticketId, Ticket.*, Show.*, 
+           Artist.name AS artistName, Artist.imageBytes AS artistImage
     FROM Ticket
     INNER JOIN Show ON Ticket.showId = Show.id
     INNER JOIN Artist ON Show.artistId = Artist.id

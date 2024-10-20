@@ -8,7 +8,7 @@ import 'package:ticketapp/services/database_helper.dart';
 class TransfarUser extends StatefulWidget {
   final String section;
   final Function seatTransBottomSheet;
-  final List<int> selectedSeats;
+  final List<int>? selectedSeats;
   final int userId;
   final int showId;
   final String showData;
@@ -59,7 +59,7 @@ class _TransfarUserState extends State<TransfarUser> {
         firstName: firstName,
         lastName: lastName,
         emailPhone: emailPhone,
-        ticketIds: widget.selectedSeats,
+        ticketIds: widget.selectedSeats!,
         note: note,
       );
       int transferId = await DatabaseHelper.addTransferInfo(transferInfo);
@@ -102,8 +102,6 @@ class _TransfarUserState extends State<TransfarUser> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final seatInfo =
-        "Sec ${widget.section}, Row ${widget.selectedSeats[0].toString()}, Seat ${widget.selectedSeats[1].toString()}, ${generateSeatInfo(widget.selectedSeats)}";
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -135,18 +133,18 @@ class _TransfarUserState extends State<TransfarUser> {
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  "${widget.selectedSeats.length.toString()} Ticket Selected",
+                  "${widget.selectedSeats!.length.toString()} Ticket Selected",
                   textAlign: TextAlign.left,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text(
-                  seatInfo,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.left,
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 16.0),
+              //   child: Text(
+              //     seatInfo,
+              //     style: const TextStyle(fontWeight: FontWeight.w500),
+              //     textAlign: TextAlign.left,
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
@@ -272,7 +270,7 @@ class _TransfarUserState extends State<TransfarUser> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                               child: Text(
-                                'Transfer ${widget.selectedSeats.length.toString()} To',
+                                'Transfer ${widget.selectedSeats!.length.toString()} To',
                                 style:
                                     const TextStyle(color: Color(0xFFFFFFFF)),
                               ),

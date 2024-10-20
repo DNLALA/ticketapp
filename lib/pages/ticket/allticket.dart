@@ -316,8 +316,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                             children: [
                                               Text(
                                                 ticket['artistName'],
+                                                textAlign: TextAlign.center,
                                                 style: const TextStyle(
-                                                    fontSize: 25,
+                                                    fontSize: 20,
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -325,6 +326,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                               const SizedBox(height: 5),
                                               Text(
                                                 widget.showData,
+                                                textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.white),
@@ -358,35 +360,35 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                   ticket['transferEmail'] == null
                                       ? ticket['view'] == 'Scheduling Type'
                                           ? const SizedBox(
-                                              height: 20,
-                                            )
-                                          : const SizedBox(
                                               height: 0,
                                             )
+                                          : const SizedBox(
+                                              height: 20,
+                                            )
                                       : const SizedBox.shrink(),
                                   ticket['transferEmail'] == null
                                       ? ticket['view'] == 'Scheduling Type'
-                                          ? const SizedBox(
+                                          ? const SizedBox.shrink()
+                                          : const SizedBox(
                                               height: 10,
                                             )
-                                          : const SizedBox.shrink()
                                       : const SizedBox.shrink(),
                                   ticket['transferEmail'] == null
                                       ? ticket['view'] == 'Scheduling Type'
-                                          ? Text(
-                                              ('${ticket['fee']}'),
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xFF908E8E),
-                                              ),
-                                            )
-                                          : const Text(
+                                          ? const Text(
                                               ('Ticket will be ready in:'),
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w300,
                                                 color: Colors.black,
+                                              ),
+                                            )
+                                          : Text(
+                                              ('${ticket['fee']}'),
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xFF908E8E),
                                               ),
                                             )
                                       : const SizedBox.shrink(),
@@ -397,7 +399,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                       : const SizedBox.shrink(),
                                   ticket['transferEmail'] == null
                                       ? ticket['view'] == 'Scheduling Type'
-                                          ? InkWell(
+                                          ? CountdownTimerWidget(
+                                              endTime: endTime)
+                                          : InkWell(
                                               onTap: () {
                                                 viewBarcodeBottomSheet(
                                                   context,
@@ -438,8 +442,6 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                                 ),
                                               ),
                                             )
-                                          : CountdownTimerWidget(
-                                              endTime: endTime)
                                       : const SizedBox.shrink(),
                                   ticket['transferEmail'] == null
                                       ? const SizedBox(

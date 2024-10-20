@@ -134,7 +134,9 @@ class _ShowListState extends State<ShowList> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             ActionContainer(
-                              onTap: () {},
+                              onTap: () {
+                                _deleteArtist(showData[index]['id']);
+                              },
                               image: 'assets/images/bin.png',
                               color: Colors.red,
                             ),
@@ -171,7 +173,7 @@ class _ShowListState extends State<ShowList> {
   }
 
   void _deleteArtist(id) async {
-    // Specify type for the id parameter
+    print(id);
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -187,9 +189,9 @@ class _ShowListState extends State<ShowList> {
             ),
             TextButton(
               onPressed: () async {
-                await DatabaseHelper.deleteShow(id); // Corrected method call
+                await DatabaseHelper.deleteShow(id);
                 setState(() {});
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: const Text('Delete'),
             ),

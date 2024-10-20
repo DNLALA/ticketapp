@@ -2,7 +2,6 @@
 
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:ticketapp/componets/TextFields/BaseText.dart';
 import 'package:ticketapp/componets/cards/actioncard.dart';
 import 'package:ticketapp/model/datamodel.dart';
 import 'package:ticketapp/pages/ticket/addticketmodal.dart';
@@ -161,7 +160,7 @@ class _TicketListState extends State<TicketList> {
                               children: [
                                 ActionContainer(
                                   onTap: () {
-                                    _deleteArtist(show.id);
+                                    _deleteArtist(ticketData['ticketId']);
                                   },
                                   image: 'assets/images/bin.png',
                                   color: Colors.red,
@@ -254,14 +253,15 @@ class _TicketListState extends State<TicketList> {
   }
 
   void _deleteArtist(id) async {
-    // Specify type for the id parameter
+    print(id);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Ticket'), // Update the dialog title
+          title: const Text('Delete Ticket'),
           content: const Text(
-              'Are you sure you want to delete this Ticket?'), // Update the dialog content
+            'Are you sure you want to delete this Ticket?',
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
