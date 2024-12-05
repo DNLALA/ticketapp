@@ -14,6 +14,7 @@ class MyEvents extends StatefulWidget {
 
 class _MyEventsState extends State<MyEvents> {
   List<Map<String, dynamic>> _showsWithTicketCounts = [];
+  bool isUpcomingSelected = true; // Track the active tab
 
   @override
   void initState() {
@@ -33,240 +34,276 @@ class _MyEventsState extends State<MyEvents> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0163D5),
+        backgroundColor: const Color(0xFF1E272E),
         centerTitle: true,
-        title: const Text(
-          'My Events',
-          style: TextStyle(color: Colors.white),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'My Events',
+              style: TextStyle(color: Colors.white),
+            ),
+            const SizedBox(width: 8), // Space between icon and text
+            Container(
+              width: 20, // Set the size for the circle
+              height: 20, // Set the size for the circle
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white, // Border color
+                  width: 1, // Border width
+                ),
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/images/american_flag.png'), // American flag image
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          ],
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.refresh, color: Colors.white),
-          )
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Action when the "Help" text is pressed
+            },
+            child: const Text(
+              'Help',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ],
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          // Top Navigation Bar
+          Container(
+            color: const Color.fromARGB(255, 4, 108, 226),
             child: Row(
               children: [
-                Text('Upcoming Events'),
-                SizedBox(
-                  width: 15,
-                ),
-                Text('Past Events'),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 2,
-              width: 393,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.blue,
-                    Color(0xFF444444),
-                  ],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.bottomRight,
-
-                  stops: [
-                    0.0,
-                    1.0
-                  ], // Adjust stops to control where the gradient changes
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _showsWithTicketCounts.length,
-              itemBuilder: (context, index) {
-                final show = Show.fromJson(_showsWithTicketCounts[index]);
-                final ticketCount =
-                    _showsWithTicketCounts[index]['ticketCount'];
-                final artistImage =
-                    _showsWithTicketCounts[index]['artistImage'] as Uint8List;
-                final artistName = _showsWithTicketCounts[index]['artistName'];
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
+                Expanded(
+                  child: GestureDetector(
                     onTap: () {
-                      String showData =
-                          '${show.weekday}, ${getMonthName(show.month)} ${show.day}, ${show.time} ${show.location}';
-                      String date =
-                          '2024-${show.month}-${show.day} ${show.time}';
-                      print(date);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TicketListForShow(
-                            showId: show.id!,
-                            showData: showData,
-                            date: date,
-                          ),
-                        ),
-                      );
+                      setState(() {
+                        isUpcomingSelected = true;
+                      });
                     },
                     child: Container(
-                      height: 167,
-                      width: 393,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 111, 110, 110),
-                        image: DecorationImage(
-                          image: MemoryImage(artistImage),
-                          fit: BoxFit.cover,
+                        border: Border(
+                          bottom: isUpcomingSelected
+                              ? const BorderSide(color: Colors.white, width: 2)
+                              : BorderSide.none,
                         ),
                       ),
-                      child: Container(
-                        color: Color.fromARGB(143, 0, 0, 0),
-                        height: 167,
-                        width: 393,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 77,
-                                        width: 107,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 111, 110, 110),
-                                          image: DecorationImage(
-                                            image: MemoryImage(artistImage),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // child: Image.memory(artistImage)),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Text(
-                                        'Order #${show.orderId}',
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 50,
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 10,
-                                      ),
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        getMonthName(show.month).toUpperCase(),
-                                        style: const TextStyle(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        show.day.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 30,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 30,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '${show.weekday} -',
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            show.time,
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        artistName,
-                                        style: const TextStyle(
-                                            fontSize: 15, color: Colors.white),
-                                      ),
-                                      Text(
-                                        show.location,
-                                        style: const TextStyle(
-                                            fontSize: 15, color: Colors.white),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Upcoming (${_showsWithTicketCounts.length})', // Dynamically update count
+                        style: TextStyle(
+                          color: isUpcomingSelected
+                              ? Colors.white
+                              : const Color.fromARGB(255, 206, 206, 206),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
-                );
-              },
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isUpcomingSelected = false;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: !isUpcomingSelected
+                              ? const BorderSide(color: Colors.white, width: 2)
+                              : BorderSide.none,
+                        ),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Past (0)', // Static count for past events
+                        style: TextStyle(
+                          color: !isUpcomingSelected
+                              ? Colors.white
+                              : const Color.fromARGB(255, 194, 194, 194),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+          // Event List (Placeholder for Upcoming and Past Events)
+          Expanded(
+            child: isUpcomingSelected
+                ? _buildUpcomingEvents()
+                : _buildPastEvents(),
+          ),
         ],
+      ),
+    );
+  }
+
+  // Upcoming Events List
+  Widget _buildUpcomingEvents() {
+    return ListView.builder(
+      itemCount: _showsWithTicketCounts.length,
+      itemBuilder: (context, index) {
+        final show = Show.fromJson(_showsWithTicketCounts[index]);
+        final ticketCount = _showsWithTicketCounts[index]['ticketCount'];
+        final artistImage =
+            _showsWithTicketCounts[index]['artistImage'] as Uint8List;
+        final artistName = _showsWithTicketCounts[index]['artistName'];
+        final showName = _showsWithTicketCounts[index]['showName'];
+        final claimedTickets = 0; // Static, adjust based on your data model
+
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {
+              String showData =
+                  '${show.weekday}, ${getMonthName(show.month)} ${show.day}, ${show.time} ${show.location}';
+              String date = '2024-${show.month}-${show.day} ${show.time}';
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TicketListForShow(
+                    showId: show.id!,
+                    showData: showData,
+                    date: date,
+                  ),
+                ),
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Vertical "New" Header at the top of the card
+                Container(
+                  width: 412, // Same width as the card
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  color: const Color.fromARGB(
+                      255, 129, 15, 150), // Purple background
+                  child: const Center(
+                    child: Text(
+                      'NEW DATE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+                // Event card content below the header
+                Container(
+                  height: 200,
+                  width: 412,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 111, 110, 110),
+                    image: DecorationImage(
+                      image: MemoryImage(artistImage),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Container(
+                    color: const Color.fromARGB(184, 0, 0, 0),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment:
+                          MainAxisAlignment.end, // Align content to the bottom
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Artist and show name
+                        Text(
+                          '$artistName - $showName',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        // Date and location
+                        Text(
+                          '${show.weekday}, ${getMonthName(show.month)} ${show.day}, ${show.time} . ${show.location}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        // Tickets and claimed status
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            // Ticket count
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.confirmation_number,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '$ticketCount tickets',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 8),
+                            // Claimed tickets (static as 0 for now)
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                const Text(
+                                  '0 claimed',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // Past Events List (Static Placeholder)
+  Widget _buildPastEvents() {
+    return const Center(
+      child: Text(
+        'No Past Events',
+        style: TextStyle(fontSize: 18, color: Colors.grey),
       ),
     );
   }

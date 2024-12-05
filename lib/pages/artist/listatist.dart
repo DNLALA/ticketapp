@@ -237,7 +237,8 @@ class _ArtistListState extends State<ArtistList> {
   }
 
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().getImage(
+    final picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
