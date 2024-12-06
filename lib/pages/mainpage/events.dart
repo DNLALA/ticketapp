@@ -163,7 +163,7 @@ class _MyEventsState extends State<MyEvents> {
         final artistImage =
             _showsWithTicketCounts[index]['artistImage'] as Uint8List;
         final artistName = _showsWithTicketCounts[index]['artistName'];
-        final showName = _showsWithTicketCounts[index]['showName'];
+        final showName = _showsWithTicketCounts[index]['name'];
         final claimedTickets = 0; // Static, adjust based on your data model
 
         return Padding(
@@ -230,19 +230,19 @@ class _MyEventsState extends State<MyEvents> {
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 19,
+                            fontSize: 20,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 2),
                         // Date and location
                         Text(
                           '${show.weekday}, ${getMonthName(show.month)} ${show.day}, ${show.time} . ${show.location}',
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 16,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 5),
                         // Tickets and claimed status
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -250,36 +250,44 @@ class _MyEventsState extends State<MyEvents> {
                             // Ticket count
                             Row(
                               children: [
-                                const Icon(
-                                  Icons.confirmation_number,
-                                  color: Colors.white,
-                                  size: 16,
+                                Transform.rotate(
+                                  angle:
+                                      2, // Horizontal orientation (no rotation needed by default)
+                                  child: const Icon(
+                                    Icons.confirmation_number,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
                                 ),
-                                const SizedBox(width: 4),
+                                const SizedBox(
+                                    width:
+                                        4), // Adjust spacing between the icon and text
                                 Text(
                                   '$ticketCount tickets',
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 15,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(width: 8),
+
+                            const SizedBox(width: 20),
                             // Claimed tickets (static as 0 for now)
                             Row(
                               children: [
                                 const Icon(
                                   Icons.arrow_forward,
                                   color: Colors.white,
-                                  size: 16,
+                                  size:
+                                      24, // Increased size to make it appear thicker
                                 ),
                                 const SizedBox(width: 4),
                                 const Text(
                                   '0 claimed',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 15,
                                   ),
                                 ),
                               ],
@@ -311,29 +319,29 @@ class _MyEventsState extends State<MyEvents> {
   String getMonthName(String month) {
     switch (month) {
       case '01':
-        return 'January';
+        return 'Jan';
       case '02':
-        return 'February';
+        return 'Feb';
       case '03':
-        return 'March';
+        return 'Mar';
       case '04':
-        return 'April';
+        return 'Apr';
       case '05':
         return 'May';
       case '06':
-        return 'June';
+        return 'Jun';
       case '07':
-        return 'July';
+        return 'Jul';
       case '08':
-        return 'August';
+        return 'Aug';
       case '09':
-        return 'September';
+        return 'Sep';
       case '10':
-        return 'October';
+        return 'Oct';
       case '11':
-        return 'November';
+        return 'Nov';
       case '12':
-        return 'December';
+        return 'Dec';
       default:
         return '';
     }

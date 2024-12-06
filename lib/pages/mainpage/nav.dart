@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticketapp/pages/mainpage/events.dart';
+import 'package:ticketapp/pages/mainpage/events.dart'; // Assuming MyEvents is imported correctly
 import 'package:ticketapp/pages/mainpage/home.dart';
 import 'package:ticketapp/pages/mainpage/profile.dart';
 
@@ -7,7 +7,6 @@ class Nav extends StatefulWidget {
   const Nav({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _NavState createState() => _NavState();
 }
 
@@ -15,15 +14,15 @@ class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const Home(),
-    const Center(child: Text('data2')),
-    const Center(child: Text('data3')),
+    const Center(child: Text('For You')),
     const MyEvents(),
+    const Center(child: Text('Explore')),
+    // Make sure this points to your MyEvents widget
     ProfilePage(),
   ];
 
   void _onItemTap(int index) {
     setState(() {
-      // Ensure that index is within the valid range
       _selectedIndex = index.clamp(0, _widgetOptions.length - 1);
     });
   }
@@ -32,23 +31,17 @@ class _NavState extends State<Nav> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         body: _widgetOptions[_selectedIndex],
         bottomNavigationBar: Container(
           height: screenHeight * 0.099,
-          decoration: BoxDecoration(
-              // border: Border.all(
-              //   width: 0.1,
-              //   color: Colors.black,
-              // ),
-              ),
+          decoration: BoxDecoration(),
           child: BottomNavigationBar(
             currentIndex: _selectedIndex,
             onTap: _onItemTap,
-            selectedItemColor: const Color(0xFF127CF7),
+            selectedItemColor: const Color.fromARGB(255, 5, 42, 251),
             unselectedItemColor: Color.fromARGB(255, 122, 122, 122),
             type: BottomNavigationBarType.fixed,
             items: <BottomNavigationBarItem>[
@@ -56,15 +49,11 @@ class _NavState extends State<Nav> {
                 icon: _selectedIndex == 0
                     ? Image.asset('assets/images/home-house_svgrepo.com.png')
                     : Image.asset('assets/images/home-house_svgrepo.com-.png'),
-                label: 'Home',
+                label: 'Discover',
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('assets/images/🦆 icon _search_.png'),
-                label: 'Search',
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset('assets/images/Vector.png'),
-                label: 'Favorites',
+                label: 'For You',
               ),
               BottomNavigationBarItem(
                 icon: _selectedIndex == 3
@@ -73,6 +62,10 @@ class _NavState extends State<Nav> {
                     : Image.asset(
                         'assets/images/concert-tickets_svgrepo.com.png'),
                 label: 'My Events',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset('assets/images/Vector.png'),
+                label: 'Sell',
               ),
               BottomNavigationBarItem(
                 icon: _selectedIndex == 4

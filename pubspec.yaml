@@ -14,7 +14,7 @@ dependencies:
   sqflite: ^2.0.2
   image_picker: ^1.1.2
   firebase_core: ^3.6.0
-  intl: ^0.19.0
+  intl: ^0.18.0 
   
 
   path: any
@@ -36,7 +36,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/flicon.jpeg
-    - assets/american_flag.png
+    - assets/images/american_flag.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

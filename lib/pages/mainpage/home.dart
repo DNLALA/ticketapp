@@ -242,7 +242,7 @@ class _HomeState extends State<Home> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10),
                                   child: Text(
-                                    show.name,
+                                    show.showName,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 17,

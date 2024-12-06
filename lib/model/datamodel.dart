@@ -37,7 +37,7 @@ class Show {
   final String month;
   final int day;
   final String time;
-  final String name;
+  final String showName;
   final String location;
   final String fee;
   final String? orderId;
@@ -51,7 +51,7 @@ class Show {
     required this.month,
     required this.day,
     required this.time,
-    required this.name,
+    required this.showName,
     required this.location,
     required this.fee,
     required this.weekday,
@@ -67,7 +67,7 @@ class Show {
       'month': month,
       'day': day,
       'time': time,
-      'name': name,
+      'name': showName,
       'location': location,
       'fee': fee,
       'orderId': orderId,
@@ -87,7 +87,7 @@ class Show {
         month: json['month'] ?? '',
         day: json['day'] ?? 1,
         time: json['time'] ?? '',
-        name: json['name'] ?? '',
+        showName: json['name'] ?? '',
         location: json['location'] ?? '',
         fee: json['fee'] ?? 0.0,
         orderId: json['orderId'],

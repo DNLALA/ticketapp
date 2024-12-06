@@ -247,7 +247,7 @@ class _AddShowState extends State<AddShow> {
 
     if (showName.isNotEmpty && _selectedArtist != null) {
       final Show show = Show(
-        name: showName,
+        showName: showName,
         artistId: _selectedArtist!.id,
         month: month,
         day: int.parse(day),

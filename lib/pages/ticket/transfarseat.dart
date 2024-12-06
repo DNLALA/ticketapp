@@ -58,7 +58,6 @@ class _TicketSelectionState extends State<TicketSelection> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<List<Ticket>>(
-      // Adjusted FutureBuilder type
       future: _ticketsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -75,29 +74,39 @@ class _TicketSelectionState extends State<TicketSelection> {
           height: screenHeight * 0.6,
           width: screenWidth,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Align everything to the top-left
             children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      'SELECT SEATS TO TRANSFER',
+                      style: TextStyle(
+                        color: Color(0xFF908E8E),
+                        fontSize: 13,
+                      ),
+                    ),
+                    const Divider(
+                      height: 0.5,
+                      thickness: 1,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Text(
-                          'SELECT SEATS TO TRANSFER',
-                          style: TextStyle(
-                            color: Color(0xFF908E8E),
-                            fontSize: 13,
-                          ),
-                        ),
-                        const Divider(
-                          height: 0.5,
-                          thickness: 1,
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
+                            Transform.rotate(
+                              angle:
+                                  2, // Horizontal orientation (no rotation needed by default)
+                              child: const Icon(
+                                Icons.confirmation_number,
+                                color: Color(0xFF908E8E),
+                                size: 15,
+                              ),
+                            ), // Add some spacing between the icon and the text
                             Text(
                               '${tickets.length.toString()} tickets',
                               textAlign: TextAlign.right,
@@ -107,147 +116,145 @@ class _TicketSelectionState extends State<TicketSelection> {
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: FutureBuilder<List<Ticket>>(
-                      future: _ticketsFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        } else {
-                          final tickets = snapshot.data;
-                          if (tickets == null || tickets.isEmpty) {
-                            return const Center(
-                                child: Text('No tickets available'));
-                          }
-                          return Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            alignment: WrapAlignment.start,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            children: tickets.map((ticket) {
-                              final isSelected = _selectedTickets.contains(
-                                  ticket); // Check if ticket is selected
-                              return GestureDetector(
-                                onTap: () => _toggleTicketSelection(ticket),
-                                child: Container(
-                                  width: 108,
-                                  height: 109,
-                                  decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0xFF908E8E),
-                                        offset: Offset(0, 2),
-                                        blurRadius: 4,
-                                        spreadRadius: 0,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 31,
-                                        width: screenWidth,
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(8),
-                                            topRight: Radius.circular(8),
-                                          ),
-                                          color: Color(0xFF0163D5),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            ('SEAT ${ticket.seat}'),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 78,
-                                        width: screenWidth,
-                                        child: Center(
-                                          child: Icon(
-                                            isSelected
-                                                ? Icons.check_circle
-                                                : Icons.circle_outlined,
-                                            color: isSelected
-                                                ? Colors.blue
-                                                : const Color(0xFF908E8E),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Column(
-                children: [
-                  Container(
-                    height: 45,
-                    width: screenWidth,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFEBECED),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('${_selectedTickets.length} selected'),
-                          InkWell(
-                            onTap: () {
-                              if (_selectedTickets.isNotEmpty) {
-                                for (Ticket ticket in _selectedTickets) {
-                                  print('Selected Ticket: ${ticket.toJson()}');
-                                }
-                                Navigator.pop(context);
-                                print(_selectedTickets);
-                                widget.seatTransToBottomSheet(
-                                    context, _selectedTickets);
-                              }
-                            },
-                            child: const Row(
-                              children: [
-                                Text(
-                                  'Transfer To',
-                                  style: TextStyle(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FutureBuilder<List<Ticket>>(
+                  future: _ticketsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else {
+                      final tickets = snapshot.data;
+                      if (tickets == null || tickets.isEmpty) {
+                        return const Center(
+                            child: Text('No tickets available'));
+                      }
+                      return Wrap(
+                        spacing: 10, // Horizontal spacing between cards
+                        runSpacing: 10, // Vertical spacing between rows
+                        alignment: WrapAlignment
+                            .start, // Ensure wrapping starts from left
+                        children: tickets.map((ticket) {
+                          final isSelected = _selectedTickets
+                              .contains(ticket); // Check if ticket is selected
+                          return GestureDetector(
+                            onTap: () => _toggleTicketSelection(ticket),
+                            child: Container(
+                              width: 108, // Fixed width for the card
+                              height: 109, // Fixed height for the card
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8)),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0xFF908E8E),
+                                    offset: Offset(0, 2),
+                                    blurRadius: 4,
+                                    spreadRadius: 0,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 31,
+                                    width:
+                                        108, // Same width for the top container
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(8),
+                                        topRight: Radius.circular(8),
+                                      ),
                                       color: Color(0xFF0163D5),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(Icons.arrow_forward_ios,
-                                    color: Color(0xFF0163D5)),
-                              ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'SEAT ${ticket.seat}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 78,
+                                    width:
+                                        108, // Same width for the icon container
+                                    child: Center(
+                                      child: Icon(
+                                        isSelected
+                                            ? Icons.check_circle
+                                            : Icons.circle_outlined,
+                                        color: isSelected
+                                            ? Colors.blue
+                                            : const Color(0xFF908E8E),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
+                          );
+                        }).toList(),
+                      );
+                    }
+                  },
+                ),
+              ),
+              // Spacer is used to push the button to the bottom
+              Spacer(),
+              // Footer with the "Transfer To" button
+              Container(
+                height: 50,
+                width: screenWidth,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFEBECED),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('${_selectedTickets.length} selected'),
+                      InkWell(
+                        onTap: () {
+                          if (_selectedTickets.isNotEmpty) {
+                            for (Ticket ticket in _selectedTickets) {
+                              print('Selected Ticket: ${ticket.toJson()}');
+                            }
+                            Navigator.pop(context);
+                            print(_selectedTickets);
+                            widget.seatTransToBottomSheet(
+                                context, _selectedTickets);
+                          }
+                        },
+                        child: const Row(
+                          children: [
+                            Text(
+                              'Transfer To',
+                              style: TextStyle(
+                                  color: Color(0xFF0163D5),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Icon(Icons.arrow_forward_ios,
+                                color: Color(0xFF0163D5)),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),

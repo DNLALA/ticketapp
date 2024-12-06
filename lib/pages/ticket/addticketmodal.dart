@@ -131,7 +131,7 @@ class _AddTicketModelState extends State<AddTicketModel> {
                   items: _shows.map((show) {
                     return DropdownMenuItem<Show>(
                       value: show,
-                      child: Text(show.name),
+                      child: Text(show.showName),
                     );
                   }).toList(),
                   decoration: const InputDecoration(

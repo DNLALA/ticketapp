@@ -150,6 +150,9 @@ class _ArtistListState extends State<ArtistList> {
             isDismissible: true,
             enableDrag: true,
             isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero, // Remove top rounded corners
+            ),
             builder: (BuildContext context) {
               return Container(
                 height: screenHeight * 0.8,

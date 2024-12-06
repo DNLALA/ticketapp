@@ -203,18 +203,19 @@ class DatabaseHelper {
       int showId) async {
     final db = await _getDB();
     final List<Map<String, dynamic>> maps = await db.rawQuery('''
-    SELECT Ticket.*, 
-           Show.fee AS fee, 
-           Show.ticketType AS ticketType, 
-           Artist.name AS artistName, 
-           Artist.imageBytes AS artistImage,
-           TransferInfo.emailPhone AS transferEmail
-    FROM Ticket
-    INNER JOIN Show ON Ticket.showId = Show.id
-    INNER JOIN Artist ON Show.artistId = Artist.id
-    LEFT JOIN TransferTicket ON Ticket.id = TransferTicket.ticketId
-    LEFT JOIN TransferInfo ON TransferTicket.transferId = TransferInfo.id
-    WHERE Show.id = ?
+  SELECT Ticket.*, 
+         Show.fee AS fee, 
+         Show.ticketType AS ticketType, 
+         Show.name AS showName,
+         Artist.name AS artistName, 
+         Artist.imageBytes AS artistImage,
+         TransferInfo.emailPhone AS transferEmail
+  FROM Ticket
+  INNER JOIN Show ON Ticket.showId = Show.id
+  INNER JOIN Artist ON Show.artistId = Artist.id
+  LEFT JOIN TransferTicket ON Ticket.id = TransferTicket.ticketId
+  LEFT JOIN TransferInfo ON TransferTicket.transferId = TransferInfo.id
+  WHERE Show.id = ?
   ''', [showId]);
 
     return maps;
@@ -313,7 +314,7 @@ class DatabaseHelper {
     final db = await _getDB();
 
     final List<Map<String, dynamic>> maps = await db.rawQuery('''
-    SELECT Show.*, Artist.name AS artistName, Artist.imageBytes AS artistImage
+    SELECT Show.*, Artist.name AS artistName, Show.name AS showName, Artist.imageBytes AS artistImage
     FROM Show
     LEFT JOIN Artist ON Show.artistId = Artist.id
     WHERE Show.id = ?

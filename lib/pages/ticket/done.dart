@@ -46,7 +46,7 @@ class _TransfarDoneState extends State<TransfarDone> {
               height: 45,
               width: screenWidth,
               decoration: const BoxDecoration(
-                color: Color(0xFFEBECED),
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
               child: const Padding(
                 padding: EdgeInsets.all(8.0),

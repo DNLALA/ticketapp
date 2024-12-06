@@ -32,6 +32,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
   int userId = 1;
   bool haveUser = false;
   int myCurrentIndex = 0;
+  int currentBubbleIndex = 0;
 
   @override
   void initState() {
@@ -66,9 +67,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
     // DateTime endTime = format.parse('2022-07-9 2:39 PM');
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFF1E272E),
+        centerTitle: true, // Ensures the title is centered
+        automaticallyImplyLeading: false, // Hides the default leading widget
+        backgroundColor: const Color(0xFF1E272E), // Sets the background color
         leading: IconButton(
           icon: const Icon(
             Icons.close,
@@ -80,20 +81,27 @@ class _TicketListForShowState extends State<TicketListForShow> {
         ),
         actions: const [
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Help',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-                color: Colors.white,
+            padding: EdgeInsets.only(right: 16.0), // Adds padding to the right
+            child: Align(
+              alignment: Alignment.center, // Vertically centers the "Help" text
+              child: Text(
+                'Help',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, // Makes the text bold
+                  fontSize: 18, // Sets the font size
+                  color: Colors.white, // Sets the text color
+                ),
               ),
             ),
           )
         ],
         title: const Text(
-          'My Ticket',
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          'My Tickets',
+          style: TextStyle(
+            fontWeight: FontWeight.bold, // Makes the title bold
+            fontSize: 18, // Sets the font size
+            color: Colors.white, // Sets the text color
+          ),
         ),
       ),
       body: ListView(
@@ -113,11 +121,26 @@ class _TicketListForShowState extends State<TicketListForShow> {
                   child: Row(
                     children: snapshot.data!.map((ticket) {
                       return Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: Container(
                           width: screenWidth * 0.9,
-                          height: 576,
-                          color: const Color(0xFFF3F3F3),
+                          height: 590,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                              bottomLeft: Radius.circular(8),
+                              bottomRight: Radius.circular(8),
+                            ),
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            border: Border(
+                              bottom: BorderSide(
+                                color:
+                                    const Color(0xFF2E69D7), // Blue line color
+                                width: 2.0, // Thickness of the line
+                              ),
+                            ),
+                          ),
                           child: Column(
                             children: [
                               Column(
@@ -131,7 +154,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                         topRight: Radius.circular(8),
                                       ),
                                       color: ticket['transferEmail'] == null
-                                          ? const Color(0xFF2E69D7)
+                                          ? const Color.fromARGB(
+                                              255, 14, 92, 238)
                                           : const Color.fromARGB(
                                               255, 157, 162, 166),
                                     ),
@@ -151,7 +175,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                       width: screenWidth,
                                       decoration: BoxDecoration(
                                         color: ticket['transferEmail'] == null
-                                            ? const Color(0xFF2E69D7)
+                                            ? const Color.fromARGB(
+                                                255, 14, 92, 238)
                                             : const Color(0xFF576570),
                                       ),
                                       child: Row(
@@ -315,21 +340,23 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                           child: Column(
                                             children: [
                                               Text(
-                                                ticket['artistName'],
+                                                "${ticket['artistName']} - ${ticket['showName']}", // Proper string interpolation
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                widget.showData,
+                                                widget
+                                                    .showData, // Displays the data passed from the widget
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.white),
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -434,8 +461,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color:
-                                                            Color(0xFFF3F3F3),
+                                                        color: Color.fromARGB(
+                                                            255, 255, 255, 255),
                                                       ),
                                                     )
                                                   ],
@@ -473,7 +500,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                                   style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
-                                                          FontWeight.w400,
+                                                          FontWeight.w600,
                                                       color: Color(0xFF0163D5)),
                                                 ),
                                               ),
@@ -554,39 +581,6 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                       : const SizedBox(
                                           height: 40,
                                         ),
-                                  Container(
-                                    height: screenHeight * 0.055,
-                                    width: screenWidth,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(8),
-                                        bottomRight: Radius.circular(8),
-                                      ),
-                                      color: ticket['transferEmail'] == null
-                                          ? const Color.fromARGB(
-                                              255, 18, 118, 232)
-                                          : const Color(0xFF576570),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            'assets/images/tickets_svgrepo.com.png'),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        const Text(
-                                          ('ticketmaster.verified'),
-                                          style: TextStyle(
-                                            color: Color(0xFFF3F3F3),
-                                            fontSize: 15,
-                                            fontStyle: FontStyle.italic,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                 ],
                               ),
                             ],
@@ -600,7 +594,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
             },
           ),
           const SizedBox(
-            height: 10,
+            height: 2,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -609,11 +603,13 @@ class _TicketListForShowState extends State<TicketListForShow> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Container(
-                    width: 10,
-                    height: 10,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Color.fromARGB(255, 203, 203, 203),
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: i == currentBubbleIndex
+                          ? const Color.fromARGB(255, 30, 30, 30)
+                          : const Color.fromARGB(255, 203, 203, 203),
                     ),
                   ),
                 ),
@@ -734,6 +730,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
         isDismissible: true,
         enableDrag: true,
         isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero, // No rounded corners
+        ),
         builder: (BuildContext context) {
           return TicketSelection(
             eventId: widget.showId,
@@ -752,6 +751,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
       isDismissible: true,
       enableDrag: true,
       isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero, // No rounded corners
+      ),
       builder: (BuildContext context) {
         return TransfarTo(
           section: '',
@@ -772,6 +774,9 @@ class _TicketListForShowState extends State<TicketListForShow> {
       isDismissible: true,
       enableDrag: true,
       isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero, // No rounded corners
+      ),
       builder: (BuildContext context) {
         return TransfarUser(
           section: '',
