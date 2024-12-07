@@ -43,23 +43,23 @@ class _MyEventsState extends State<MyEvents> {
               'My Events',
               style: TextStyle(color: Colors.white),
             ),
-            const SizedBox(width: 8), // Space between icon and text
-            Container(
-              width: 20, // Set the size for the circle
-              height: 20, // Set the size for the circle
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white, // Border color
-                  width: 1, // Border width
-                ),
-                image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/american_flag.png'), // American flag image
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
+            // const SizedBox(width: 8), // Space between icon and text
+            // Container(
+            //   width: 20, // Set the size for the circle
+            //   height: 20, // Set the size for the circle
+            //   decoration: BoxDecoration(
+            //     shape: BoxShape.circle,
+            //     border: Border.all(
+            //       color: Colors.white, // Border color
+            //       width: 1, // Border width
+            //     ),
+            //     image: DecorationImage(
+            //       image: AssetImage(
+            //           'assets/images/american_flag.png'), // American flag image
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // )
           ],
         ),
         actions: [

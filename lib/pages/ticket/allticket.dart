@@ -255,7 +255,8 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                       width: screenWidth,
                                       decoration: BoxDecoration(
                                         color: ticket['transferEmail'] == null
-                                            ? const Color(0xFF2E69D7)
+                                            ? const Color.fromARGB(
+                                                255, 28, 100, 235)
                                             : const Color(0xFF576570),
                                       ),
                                       child: Padding(
@@ -284,7 +285,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                                   ticket['selection'],
                                                   style: const TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 30,
+                                                    fontSize: 20,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -294,7 +295,7 @@ class _TicketListForShowState extends State<TicketListForShow> {
                                               ticket['name'],
                                               style: const TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 30,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
